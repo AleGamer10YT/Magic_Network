@@ -104,6 +104,7 @@ function sanitizeDevice(input, existing = {}) {
     lastSeen: existing.lastSeen || null,
     switchMode,
     switchSpeeds
+    ,deviceSpeed: type === 'switch' ? null : (String(input.deviceSpeed || existing.deviceSpeed || '').trim() || null)
   };
 }
 

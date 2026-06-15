@@ -73,6 +73,7 @@ const els = {
   switchOptions: document.querySelector("#switchOptions"),
   switchManagementInputs: Array.from(document.querySelectorAll('input[name="switchMode"]')),
   switchSpeedInputs: Array.from(document.querySelectorAll('input[name="switchSpeeds"]')),
+  deviceSpeedInputs: Array.from(document.querySelectorAll('input[name="deviceSpeed"]')),
   switchSpeedError: document.querySelector("#switchSpeedError"),
   notesInput: document.querySelector("#notesInput"),
   toast: document.querySelector("#toast"),
@@ -461,7 +462,18 @@ function renderLink(link) {
   const from = centerOf(link.from);
   const to = centerOf(link.to);
   const midY = (from.y + to.y) / 2;
-  return `<path class="link-line" marker-end="url(#arrow)" d="M ${from.x} ${from.y} C ${from.x} ${midY}, ${to.x} ${midY}, ${to.x} ${to.y - 58}"></path>`;
+  const fromSpeed = getNodePrimarySpeed(link.from);
+  const toSpeed = getNodePrimarySpeed(link.to);
+  const bottleneck = pickLowerSpeed(fromSpeed, toSpeed);
+  const strokeColor = switchSpeedColors[bottleneck] || '#9ca9a5';
+  const speedLabel = switchSpeedLabels[bottleneck] || '';
+  const pathD = `M ${from.x} ${from.y} C ${from.x} ${midY}, ${to.x} ${midY}, ${to.x} ${to.y - 58}`;
+  const textX = (from.x + to.x) / 2;
+  const textY = (from.y + to.y) / 2 - 20;
+  return `
+    <path class="link-line" marker-end="url(#arrow)" d="${pathD}" stroke="${strokeColor}" style="stroke-width:3;fill:none"></path>
+    ${speedLabel ? `<text class="link-label" x="${textX}" y="${textY}" fill="${strokeColor}" font-size="12" font-weight="700" text-anchor="middle">${escapeSvg(speedLabel)}</text>` : ''}
+  `;
 }
 
 function centerOf(node) {
@@ -480,7 +492,11 @@ function renderNode(node) {
   const metaLine = node.type === "switch" && node.switchMode === "unmanaged"
     ? nodeTypeText
     : `${nodeTypeText} - ${ip}`;
-  const detailLine = node.type === "switch" ? getSwitchSpeedText(node) : node.mac ? truncate(node.mac, 22) : node.notes ? truncate(node.notes, 24) : "Nessuna nota";
+  const detailLine = node.type === "switch"
+    ? getSwitchSpeedText(node)
+    : node.deviceSpeed
+      ? (switchSpeedLabels[node.deviceSpeed] || node.deviceSpeed)
+      : node.mac ? truncate(node.mac, 22) : node.notes ? truncate(node.notes, 24) : "Nessuna nota";
   return `
     <g class="node-card ${node.id === state.selectedId ? "selected" : ""}" data-id="${node.id}" transform="translate(${node.position.x} ${node.position.y})">
       <rect class="node-rect" width="180" height="116" style="stroke:${borderColor}"></rect>
@@ -682,6 +698,9 @@ function openDeviceDialog(defaults = {}) {
   els.parentInput.disabled = defaults.id === "router";
   setSwitchModeValue(switchMode);
   setSwitchSpeedsValue(switchSpeeds);
+  // device speed
+  const deviceSpeed = defaults.deviceSpeed || (defaults.type === 'switch' ? getPrimarySwitchSpeed(defaults) : '1g');
+  setDeviceSpeedValue(deviceSpeed);
   updateSwitchOptions();
   if (!(els.typeInput.value === "switch" && getSwitchModeValue() === "unmanaged")) {
     applyAutomaticNetworkFieldsFromIp();
@@ -829,6 +848,29 @@ function getSwitchSpeedText(node) {
   return speeds.map((speed) => switchSpeedLabels[speed] || speed).join(", ");
 }
 
+function getDeviceSpeedValue() {
+  const checked = els.deviceSpeedInputs.find((input) => input.checked);
+  return checked ? checked.value : '1g';
+}
+
+function setDeviceSpeedValue(value) {
+  els.deviceSpeedInputs.forEach((input) => input.checked = input.value === value);
+}
+
+function getNodePrimarySpeed(node) {
+  if (!node) return '1g';
+  if (node.type === 'switch') return getPrimarySwitchSpeed(node);
+  if (node.deviceSpeed) return node.deviceSpeed;
+  if (node.id === 'router' && node.switchSpeeds) return getPrimarySwitchSpeed(node);
+  return '1g';
+}
+
+function pickLowerSpeed(a, b) {
+  const rankA = switchSpeedRank.indexOf(a) === -1 ? switchSpeedRank.indexOf('1g') : switchSpeedRank.indexOf(a);
+  const rankB = switchSpeedRank.indexOf(b) === -1 ? switchSpeedRank.indexOf('1g') : switchSpeedRank.indexOf(b);
+  return rankA < rankB ? a : b;
+}
+
 function editSelected() {
   const selected = getNode(state.selectedId);
   if (!selected) return toast("Seleziona un dispositivo");
@@ -854,7 +896,8 @@ async function saveDeviceFromForm(event) {
     parentId: els.parentInput.value,
     position: id ? getNode(id)?.position : null,
     switchMode: isSwitch ? switchMode : null,
-    switchSpeeds
+    switchSpeeds,
+    deviceSpeed: isSwitch ? null : getDeviceSpeedValue()
   };
   if (!payload.position) {
     payload.position = nextPosition(payload.parentId);

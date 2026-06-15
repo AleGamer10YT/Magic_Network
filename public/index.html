@@ -240,6 +240,17 @@
             </div>
             <p id="switchSpeedError" class="field-error hidden">Seleziona la velocita' massima supportata dallo switch.</p>
           </fieldset>
+          <fieldset id="deviceSpeedOptions" class="full-width">
+            <legend>Velocita' dispositivo</legend>
+            <div class="speed-options" aria-label="Velocita' dispositivo">
+              <label><input type="radio" name="deviceSpeed" value="10m"><span class="speed-chip speed-10m">10 Mbps</span></label>
+              <label><input type="radio" name="deviceSpeed" value="100m"><span class="speed-chip speed-100m">100 Mbps</span></label>
+              <label><input type="radio" name="deviceSpeed" value="1g" checked><span class="speed-chip speed-1g">1 Gbps</span></label>
+              <label><input type="radio" name="deviceSpeed" value="2_5g"><span class="speed-chip speed-2_5g">2,5 Gbps</span></label>
+              <label><input type="radio" name="deviceSpeed" value="10g"><span class="speed-chip speed-10g">10 Gbps</span></label>
+              <label><input type="radio" name="deviceSpeed" value="10g_plus"><span class="speed-chip speed-10g-plus">10+ Gbps</span></label>
+            </div>
+          </fieldset>
           <label class="full-width">
             Note
             <textarea id="notesInput" rows="3"></textarea>
