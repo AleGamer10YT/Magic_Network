@@ -459,29 +459,25 @@ function renderSvg() {
 }
 
 function renderLink(link) {
-  // target top-center
-  const toCenterX = (link.to.position?.x || 0) + 90;
-  const toTopY = (link.to.position?.y || 0);
-  const end = { x: toCenterX, y: toTopY };
-  // compute start point at source boundary towards target center
-  const fakeTargetForIntersection = { position: { x: toCenterX - 90, y: toTopY - 58 } };
-  const start = boundaryPointTowards(link.from, fakeTargetForIntersection);
+  const targetCenter = centerOf(link.to);
+  const end = { x: targetCenter.x, y: link.to.position?.y || 0 };
+  const start = boundaryPointTowards(link.from, targetCenter);
   const midY = (start.y + end.y) / 2;
   const fromSpeed = getNodePrimarySpeed(link.from);
   const toSpeed = getNodePrimarySpeed(link.to);
   const bottleneck = pickLowerSpeed(fromSpeed, toSpeed);
   const strokeColor = switchSpeedColors[bottleneck] || '#9ca9a5';
   const pathD = `M ${start.x} ${start.y} C ${start.x} ${midY}, ${end.x} ${midY}, ${end.x} ${end.y}`;
-  return `<path class="link-line" marker-end="url(#arrow)" d="${pathD}" stroke="${strokeColor}" style="stroke-width:3;fill:none;stroke-linecap:round"></path>`;
+  return `<path class="link-line" marker-end="url(#arrow)" d="${pathD}" stroke="${strokeColor}" style="stroke: ${strokeColor}; stroke-width: 3; fill: none; stroke-linecap: round"></path>`;
 }
 
 function centerOf(node) {
   return { x: node.position.x + 90, y: node.position.y + 58 };
 }
 
-function boundaryPointTowards(fromNode, toNode) {
+function boundaryPointTowards(fromNode, targetPoint) {
   const from = centerOf(fromNode);
-  const to = centerOf(toNode);
+  const to = targetPoint;
   const dx = to.x - from.x;
   const dy = to.y - from.y;
   const halfW = 90;
