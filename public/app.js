@@ -771,6 +771,7 @@ function applyAutomaticNetworkFieldsFromIp() {
 function updateSwitchOptions() {
   const isSwitch = els.typeInput.value === "switch";
   els.switchOptions.classList.toggle("hidden", !isSwitch);
+  document.querySelector("#deviceSpeedOptions").classList.toggle("hidden", isSwitch);
   if (!isSwitch) {
     els.statusField.classList.remove("hidden");
     els.macField.classList.remove("hidden");
