@@ -439,14 +439,14 @@ function renderSvg() {
   els.networkSvg.innerHTML = `
     <defs>
       <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#9ca9a5"></path>
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"></path>
       </marker>
     </defs>
-    <g class="links">
-      ${links.map(renderLink).join("")}
-    </g>
     <g class="nodes">
       ${nodes.map(renderNode).join("")}
+    </g>
+    <g class="links">
+      ${links.map(renderLink).join("")}
     </g>
   `;
   els.networkSvg.querySelectorAll(".node-card").forEach((node) => {
@@ -466,14 +466,8 @@ function renderLink(link) {
   const toSpeed = getNodePrimarySpeed(link.to);
   const bottleneck = pickLowerSpeed(fromSpeed, toSpeed);
   const strokeColor = switchSpeedColors[bottleneck] || '#9ca9a5';
-  const speedLabel = switchSpeedLabels[bottleneck] || '';
   const pathD = `M ${from.x} ${from.y} C ${from.x} ${midY}, ${to.x} ${midY}, ${to.x} ${to.y - 58}`;
-  const textX = (from.x + to.x) / 2;
-  const textY = (from.y + to.y) / 2 - 20;
-  return `
-    <path class="link-line" marker-end="url(#arrow)" d="${pathD}" stroke="${strokeColor}" style="stroke-width:3;fill:none"></path>
-    ${speedLabel ? `<text class="link-label" x="${textX}" y="${textY}" fill="${strokeColor}" font-size="12" font-weight="700" text-anchor="middle">${escapeSvg(speedLabel)}</text>` : ''}
-  `;
+  return `<path class="link-line" marker-end="url(#arrow)" d="${pathD}" stroke="${strokeColor}" style="stroke-width:3;fill:none;color:${strokeColor}"></path>`;
 }
 
 function centerOf(node) {
@@ -487,7 +481,9 @@ function renderNode(node) {
   const title = truncate(node.name, 22);
   const ip = truncate(node.ip || "IP non assegnato", 23);
   const icon = iconPaths[node.type] || iconPaths.unknown;
-  const borderColor = node.type === "switch" ? getSwitchBorderColor(node) : "#cfd8d4";
+  const borderColor = node.type === "switch"
+    ? getSwitchBorderColor(node)
+    : (switchSpeedColors[getNodePrimarySpeed(node)] || "#cfd8d4");
   const nodeTypeText = node.type === "switch" ? `${node.switchMode === "managed" ? "Managed" : "Unmanaged"} switch` : typeLabels[node.type] || node.type;
   const metaLine = node.type === "switch" && node.switchMode === "unmanaged"
     ? nodeTypeText
