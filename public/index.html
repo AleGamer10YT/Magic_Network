@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Magic Network</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div id="loginOverlay" class="login-overlay hidden">
+      <form id="loginForm" class="login-panel">
+        <div class="brand-mark">MN</div>
+        <h1>Magic Network</h1>
+        <p>Accesso locale protetto</p>
+        <label for="passwordInput">Password</label>
+        <input id="passwordInput" type="password" autocomplete="current-password" placeholder="Password app">
+        <button type="submit">Accedi</button>
+        <small id="loginError"></small>
+      </form>
+    </div>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="topbar-title">
+          <div class="brand-mark">MN</div>
+          <div>
+            <h1>Magic Network</h1>
+            <span id="networkMeta">Dashboard LAN locale</span>
+          </div>
+        </div>
+        <div class="toolbar" aria-label="Azioni principali">
+          <button id="addSwitchBtn" title="Aggiungi switch">
+            <span class="button-icon" data-icon="switch"></span>
+            Switch
+          </button>
+          <button id="addDeviceBtn" title="Aggiungi dispositivo">
+            <span class="button-icon" data-icon="plus"></span>
+            Dispositivo
+          </button>
+          <button id="editDeviceBtn" title="Modifica dispositivo">
+            <span class="button-icon" data-icon="edit"></span>
+            Modifica
+          </button>
+          <button id="deleteDeviceBtn" class="danger" title="Elimina dispositivo">
+            <span class="button-icon" data-icon="trash"></span>
+            Elimina
+          </button>
+          <button id="scanBtn" title="Aggiorna stato rete">
+            <span class="button-icon" data-icon="refresh"></span>
+            Aggiorna
+          </button>
+          <button id="saveBtn" title="Salva schema">
+            <span class="button-icon" data-icon="save"></span>
+            Salva
+          </button>
+          <button id="loadBtn" title="Carica schema">
+            <span class="button-icon" data-icon="folder"></span>
+            Carica
+          </button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="sidebar" aria-label="Lista dispositivi">
+          <section class="panel">
+            <div class="panel-heading">
+              <h2>Nodi nello schema</h2>
+              <span id="deviceCount">0</span>
+            </div>
+            <div class="search-row">
+              <input id="searchInput" type="search" placeholder="Cerca nome o IP">
+              <select id="statusFilter" aria-label="Filtro stato">
+                <option value="all">Tutti</option>
+                <option value="online">Online</option>
+                <option value="offline">Offline</option>
+                <option value="unknown">Sconosciuti</option>
+              </select>
+            </div>
+            <div id="deviceList" class="device-list"></div>
+          </section>
+
+          <section class="panel compact-panel">
+            <div class="panel-heading">
+              <h2>Rilevati</h2>
+              <span id="detectedCount">0</span>
+            </div>
+            <div id="detectedList" class="detected-list"></div>
+          </section>
+
+          <section class="panel compact-panel">
+            <div class="panel-heading">
+              <h2>Scansione</h2>
+            </div>
+            <p class="notice">Inserisci i primi tre numeri della rete. Esempio: se il router e' 192.168.0.1, usa 192.168.0.</p>
+            <div class="scan-grid">
+              <label class="network-prefix-field">
+                Rete
+                <span class="input-with-suffix">
+                  <input id="subnetInput" type="text" inputmode="decimal" value="192.168.0" aria-describedby="scanPreview">
+                  <span>.x</span>
+                </span>
+              </label>
+              <label>
+                Da IP
+                <input id="scanStartInput" type="number" min="1" max="254" value="1">
+              </label>
+              <label>
+                A IP
+                <input id="scanEndInput" type="number" min="1" max="254" value="254">
+              </label>
+            </div>
+            <p id="scanPreview" class="scan-preview">Controlla da 192.168.0.1 a 192.168.0.254.</p>
+            <button id="rangeScanBtn" class="wide-button">Scansiona questi IP</button>
+          </section>
+
+          <section class="panel compact-panel">
+            <div class="panel-heading">
+              <h2>Import / Export</h2>
+            </div>
+            <div class="stack-actions">
+              <button id="exportJsonBtn">Esporta JSON</button>
+              <button id="importJsonBtn">Importa JSON</button>
+              <button id="exportPngBtn">Esporta PNG</button>
+              <input id="importJsonInput" type="file" accept="application/json" hidden>
+            </div>
+          </section>
+        </aside>
+
+        <section class="canvas-section">
+          <div class="canvas-header">
+            <div>
+              <h2>Schema rete</h2>
+              <span id="selectionMeta">Nessun dispositivo selezionato</span>
+            </div>
+            <div class="legend">
+              <span><i class="status-dot online"></i>Online</span>
+              <span><i class="status-dot offline"></i>Offline</span>
+              <span><i class="status-dot unknown"></i>Sconosciuto</span>
+            </div>
+          </div>
+          <div id="canvasWrap" class="canvas-wrap">
+            <div class="canvas-controls" aria-label="Controlli zoom schema">
+              <button type="button" id="zoomInBtn" class="icon-only" title="Zoom avanti" aria-label="Zoom avanti">+</button>
+              <button type="button" id="zoomOutBtn" class="icon-only" title="Zoom indietro" aria-label="Zoom indietro">-</button>
+            </div>
+            <svg id="networkSvg" viewBox="0 0 1280 760" role="img" aria-label="Schema visuale della rete domestica"></svg>
+            <aside id="infoPanel" class="info-panel hidden" role="dialog" aria-label="Dettagli dispositivo">
+              <header id="infoPanelHandle">
+                <div>
+                  <span id="infoPanelType">Dispositivo</span>
+                  <h3 id="infoPanelTitle">Nome dispositivo</h3>
+                </div>
+                <button type="button" id="closeInfoPanelBtn" class="icon-only" aria-label="Chiudi dettagli">x</button>
+              </header>
+              <div id="infoPanelBody" class="info-panel-body"></div>
+              <footer>
+                <button type="button" id="infoPanelEditBtn">Modifica</button>
+              </footer>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="deviceDialog" class="device-dialog">
+      <form id="deviceForm" method="dialog">
+        <header>
+          <h2 id="dialogTitle">Dispositivo</h2>
+          <button type="button" id="closeDialogBtn" class="icon-only" aria-label="Chiudi">x</button>
+        </header>
+        <input id="deviceIdInput" type="hidden">
+        <div class="form-grid">
+          <label>
+            Nome
+            <input id="nameInput" required>
+          </label>
+          <label>
+            Tipo
+            <select id="typeInput">
+              <option value="router">Router</option>
+              <option value="switch">Switch</option>
+              <option value="access-point">Access point</option>
+              <option value="pc">PC</option>
+              <option value="smartphone">Smartphone</option>
+              <option value="tv">Smart TV</option>
+              <option value="console">Console</option>
+              <option value="printer">Stampante</option>
+              <option value="nas">Server/NAS</option>
+              <option value="iot">IoT</option>
+              <option value="unknown">Sconosciuto</option>
+            </select>
+          </label>
+          <label id="ipField">
+            IP
+            <input id="ipInput" inputmode="decimal" placeholder="192.168.1.25">
+          </label>
+          <label id="detectedField">
+            IP rilevato
+            <select id="detectedInput">
+              <option value="">Inserisci manualmente</option>
+            </select>
+          </label>
+          <label id="statusField">
+            Stato rilevato
+            <select id="statusInput" disabled title="Lo stato viene controllato automaticamente dal backend locale">
+              <option value="unknown">Sconosciuto</option>
+              <option value="online">Online</option>
+              <option value="offline">Offline</option>
+            </select>
+          </label>
+          <label id="macField">
+            MAC rilevato
+            <input id="macInput" readonly placeholder="Rilevato automaticamente con ARP/nmap">
+          </label>
+          <label>
+            Collegato a
+            <select id="parentInput"></select>
+          </label>
+          <fieldset id="switchOptions" class="switch-options full-width hidden">
+            <legend>Opzioni switch</legend>
+            <div class="switch-management">
+              <label class="choice-card">
+                <input type="radio" name="switchMode" value="managed">
+                <span>Managed</span>
+                <small>Ha IP di gestione</small>
+              </label>
+              <label class="choice-card">
+                <input type="radio" name="switchMode" value="unmanaged">
+                <span>Unmanaged</span>
+                <small>Nessun IP</small>
+              </label>
+            </div>
+            <div class="speed-options" aria-label="Velocita' supportate">
+              <label><input type="checkbox" name="switchSpeeds" value="10m"><span class="speed-chip speed-10m">10 Mbps</span></label>
+              <label><input type="checkbox" name="switchSpeeds" value="100m"><span class="speed-chip speed-100m">100 Mbps</span></label>
+              <label><input type="checkbox" name="switchSpeeds" value="1g"><span class="speed-chip speed-1g">1 Gbps</span></label>
+              <label><input type="checkbox" name="switchSpeeds" value="2_5g"><span class="speed-chip speed-2_5g">2,5 Gbps</span></label>
+              <label><input type="checkbox" name="switchSpeeds" value="10g"><span class="speed-chip speed-10g">10 Gbps</span></label>
+              <label><input type="checkbox" name="switchSpeeds" value="10g_plus"><span class="speed-chip speed-10g-plus">10+ Gbps</span></label>
+            </div>
+            <p id="switchSpeedError" class="field-error hidden">Seleziona la velocita' massima supportata dallo switch.</p>
+          </fieldset>
+          <label class="full-width">
+            Note
+            <textarea id="notesInput" rows="3"></textarea>
+          </label>
+        </div>
+        <footer>
+          <button type="button" id="cancelDialogBtn">Annulla</button>
+          <button id="submitDeviceBtn" type="submit">Salva</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

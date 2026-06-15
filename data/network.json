@@ -1,0 +1,209 @@
+{
+  "router": {
+    "id": "router",
+    "name": "Router Casa",
+    "type": "router",
+    "ip": "192.168.0.1",
+    "status": "online",
+    "gateway": "192.168.0.1",
+    "mac": "b8:3a:08:e7:17:50",
+    "notes": "Gateway principale della rete LAN",
+    "parentId": null,
+    "position": {
+      "x": 572.5579833984375,
+      "y": -57.40901184082031
+    }
+  },
+  "devices": [
+    {
+      "id": "90f2bc8a-04be-4555-aad7-3db4b693564f",
+      "name": "Switch Zyxel",
+      "type": "switch",
+      "ip": "",
+      "status": null,
+      "mac": "",
+      "notes": "Ciao",
+      "parentId": "router",
+      "position": {
+        "x": 233.78604125976562,
+        "y": -18.839192986488342
+      },
+      "lastSeen": null,
+      "switchMode": "unmanaged",
+      "switchSpeeds": [
+        "1g"
+      ]
+    },
+    {
+      "id": "a4e7b315-8ba0-47e8-9322-03825aa96db6",
+      "name": "PC-Alessandro",
+      "type": "pc",
+      "ip": "192.168.0.80",
+      "status": "online",
+      "mac": "a8:a1:59:f8:ac:01",
+      "notes": "",
+      "parentId": "90f2bc8a-04be-4555-aad7-3db4b693564f",
+      "position": {
+        "x": 346.0113830566406,
+        "y": 147.70745849609375
+      },
+      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "switchMode": null,
+      "switchSpeeds": []
+    },
+    {
+      "id": "b2ba901e-1609-4b2c-8d14-dd976a090150",
+      "name": "Sirio-R9",
+      "type": "pc",
+      "ip": "192.168.0.90",
+      "status": "online",
+      "mac": "08:8a:f1:7d:d6:90",
+      "notes": "",
+      "parentId": "90f2bc8a-04be-4555-aad7-3db4b693564f",
+      "position": {
+        "x": 74.51564025878906,
+        "y": 153.0876716375351
+      },
+      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "switchMode": null,
+      "switchSpeeds": []
+    }
+  ],
+  "discovered": [
+    {
+      "ip": "192.168.0.80",
+      "name": "PC-Alessandro",
+      "type": "pc",
+      "status": "online",
+      "mac": "a8:a1:59:f8:ac:01",
+      "parentId": "90f2bc8a-04be-4555-aad7-3db4b693564f",
+      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "inMap": true,
+      "id": "aa7585cb-063a-4872-8843-463c22462a05"
+    },
+    {
+      "ip": "192.168.0.50",
+      "name": "Dispositivo 192.168.0.50",
+      "type": "unknown",
+      "status": "online",
+      "mac": "b8:3a:08:28:96:d0",
+      "parentId": "router",
+      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "inMap": false,
+      "id": "368ed5c7-441e-4aac-aad1-9ad710711f4d"
+    },
+    {
+      "ip": "192.168.0.53",
+      "name": "Dispositivo 192.168.0.53",
+      "type": "unknown",
+      "status": "online",
+      "mac": "24:5e:be:25:81:27",
+      "parentId": "router",
+      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "inMap": false,
+      "id": "d264fecf-1c83-4337-877e-5d0e3323f62e"
+    },
+    {
+      "ip": "192.168.0.60",
+      "name": "Dispositivo 192.168.0.60",
+      "type": "unknown",
+      "status": "online",
+      "mac": "b8:3a:08:28:96:a0",
+      "parentId": "router",
+      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "inMap": false,
+      "id": "4e528ecb-25c0-46cb-9ce7-ef666b0150c2"
+    },
+    {
+      "ip": "192.168.0.70",
+      "name": "Dispositivo 192.168.0.70",
+      "type": "unknown",
+      "status": "online",
+      "mac": "b8:3a:08:28:96:70",
+      "parentId": "router",
+      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "inMap": false,
+      "id": "14c0551c-6491-4113-8b37-34f9ca8e2a8d"
+    },
+    {
+      "ip": "192.168.0.90",
+      "name": "Sirio-R9",
+      "type": "pc",
+      "status": "online",
+      "mac": "08:8a:f1:7d:d6:90",
+      "parentId": "90f2bc8a-04be-4555-aad7-3db4b693564f",
+      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "inMap": true,
+      "id": "56d25a15-2d02-4767-97b3-90b045c86735"
+    },
+    {
+      "ip": "192.168.0.222",
+      "name": "Dispositivo 192.168.0.222",
+      "type": "unknown",
+      "status": "online",
+      "mac": "a0:d2:b1:85:9d:53",
+      "parentId": "router",
+      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "inMap": false,
+      "id": "2c69c516-918c-4c04-8160-255fe115aed8"
+    },
+    {
+      "ip": "192.168.0.141",
+      "name": "Dispositivo 192.168.0.141",
+      "type": "unknown",
+      "status": "online",
+      "mac": "44:3e:07:7e:b5:c4",
+      "parentId": "router",
+      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "inMap": false,
+      "id": "f5e28a45-d879-4bc0-b865-c7195efea906"
+    },
+    {
+      "ip": "192.168.0.126",
+      "name": "Dispositivo 192.168.0.126",
+      "type": "unknown",
+      "status": "online",
+      "mac": "40:2f:86:89:d4:c0",
+      "parentId": "router",
+      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "inMap": false,
+      "id": "642e012f-5072-4f54-b90d-a4655f873dfa"
+    },
+    {
+      "ip": "192.168.0.180",
+      "name": "Dispositivo 192.168.0.180",
+      "type": "unknown",
+      "status": "online",
+      "mac": "06:d1:dd:e4:2a:ca",
+      "parentId": "router",
+      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "inMap": false,
+      "id": "159d0be2-45cc-46cf-9acd-cd4c53d19df9"
+    }
+  ],
+  "layout": {
+    "router": {
+      "x": 572.5579833984375,
+      "y": -57.40901184082031
+    },
+    "90f2bc8a-04be-4555-aad7-3db4b693564f": {
+      "x": 233.78604125976562,
+      "y": -18.839192986488342
+    },
+    "a4e7b315-8ba0-47e8-9322-03825aa96db6": {
+      "x": 346.0113830566406,
+      "y": 147.70745849609375
+    },
+    "b2ba901e-1609-4b2c-8d14-dd976a090150": {
+      "x": 74.51564025878906,
+      "y": 153.0876716375351
+    }
+  },
+  "settings": {
+    "subnet": "192.168.0.0/24",
+    "scanStart": 1,
+    "scanEnd": 254,
+    "autosave": true
+  },
+  "updatedAt": "2026-06-15T22:44:37.139Z"
+}
