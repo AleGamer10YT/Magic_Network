@@ -439,7 +439,7 @@ function renderSvg() {
   els.networkSvg.innerHTML = `
     <defs>
       <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"></path>
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#9ca9a5"></path>
       </marker>
     </defs>
     <g class="nodes">
@@ -467,7 +467,7 @@ function renderLink(link) {
   const bottleneck = pickLowerSpeed(fromSpeed, toSpeed);
   const strokeColor = switchSpeedColors[bottleneck] || '#9ca9a5';
   const pathD = `M ${from.x} ${from.y} C ${from.x} ${midY}, ${to.x} ${midY}, ${to.x} ${to.y - 58}`;
-  return `<path class="link-line" marker-end="url(#arrow)" d="${pathD}" stroke="${strokeColor}" style="stroke-width:3;fill:none;color:${strokeColor}"></path>`;
+  return `<path class="link-line" marker-end="url(#arrow)" d="${pathD}" stroke="${strokeColor}" style="stroke-width:3;fill:none"></path>`;
 }
 
 function centerOf(node) {
