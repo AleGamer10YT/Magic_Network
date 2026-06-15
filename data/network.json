@@ -1,7 +1,7 @@
 {
   "router": {
     "id": "router",
-    "name": "Router Casa",
+    "name": "Router Tenda",
     "type": "router",
     "ip": "192.168.0.1",
     "status": "online",
@@ -10,9 +10,12 @@
     "notes": "Gateway principale della rete LAN",
     "parentId": null,
     "position": {
-      "x": 572.5579833984375,
-      "y": -57.40901184082031
-    }
+      "x": 381.4934387207031,
+      "y": -198.24052047729492
+    },
+    "lastSeen": null,
+    "switchMode": null,
+    "switchSpeeds": []
   },
   "devices": [
     {
@@ -25,8 +28,8 @@
       "notes": "Ciao",
       "parentId": "router",
       "position": {
-        "x": 233.78604125976562,
-        "y": -18.839192986488342
+        "x": -15.584419250488281,
+        "y": -44.85264325886965
       },
       "lastSeen": null,
       "switchMode": "unmanaged",
@@ -42,12 +45,12 @@
       "status": "online",
       "mac": "a8:a1:59:f8:ac:01",
       "notes": "",
-      "parentId": "90f2bc8a-04be-4555-aad7-3db4b693564f",
+      "parentId": "bc08c84e-f277-47cc-9f93-2488b4a03b29",
       "position": {
-        "x": 346.0113830566406,
-        "y": 147.70745849609375
+        "x": 592.6908874511719,
+        "y": 119.00289916992188
       },
-      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "lastSeen": "2026-06-15T22:52:36.021Z",
       "switchMode": null,
       "switchSpeeds": []
     },
@@ -59,12 +62,48 @@
       "status": "online",
       "mac": "08:8a:f1:7d:d6:90",
       "notes": "",
-      "parentId": "90f2bc8a-04be-4555-aad7-3db4b693564f",
+      "parentId": "bc08c84e-f277-47cc-9f93-2488b4a03b29",
       "position": {
-        "x": 74.51564025878906,
-        "y": 153.0876716375351
+        "x": 378.60411071777344,
+        "y": 119.8980964422226
       },
-      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "lastSeen": "2026-06-15T22:52:36.021Z",
+      "switchMode": null,
+      "switchSpeeds": []
+    },
+    {
+      "id": "bc08c84e-f277-47cc-9f93-2488b4a03b29",
+      "name": "Switch UGreen",
+      "type": "switch",
+      "ip": "",
+      "status": null,
+      "mac": "",
+      "notes": "",
+      "parentId": "router",
+      "position": {
+        "x": 589.999755859375,
+        "y": -46.94505500793457
+      },
+      "lastSeen": null,
+      "switchMode": "unmanaged",
+      "switchSpeeds": [
+        "2_5g"
+      ]
+    },
+    {
+      "id": "168ef3f7-9ce6-4c39-b30a-e7624b2f5e05",
+      "name": "QNAP NAS",
+      "type": "nas",
+      "ip": "192.168.0.53",
+      "status": "online",
+      "mac": "24:5e:be:25:81:27",
+      "notes": "",
+      "parentId": "bc08c84e-f277-47cc-9f93-2488b4a03b29",
+      "position": {
+        "x": 836.9794921875,
+        "y": 117.80576705932617
+      },
+      "lastSeen": "2026-06-15T22:52:36.021Z",
       "switchMode": null,
       "switchSpeeds": []
     }
@@ -76,8 +115,8 @@
       "type": "pc",
       "status": "online",
       "mac": "a8:a1:59:f8:ac:01",
-      "parentId": "90f2bc8a-04be-4555-aad7-3db4b693564f",
-      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "parentId": "bc08c84e-f277-47cc-9f93-2488b4a03b29",
+      "lastSeen": "2026-06-15T22:52:36.021Z",
       "inMap": true,
       "id": "aa7585cb-063a-4872-8843-463c22462a05"
     },
@@ -88,19 +127,19 @@
       "status": "online",
       "mac": "b8:3a:08:28:96:d0",
       "parentId": "router",
-      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "lastSeen": "2026-06-15T22:52:36.021Z",
       "inMap": false,
       "id": "368ed5c7-441e-4aac-aad1-9ad710711f4d"
     },
     {
       "ip": "192.168.0.53",
-      "name": "Dispositivo 192.168.0.53",
-      "type": "unknown",
+      "name": "QNAP NAS",
+      "type": "nas",
       "status": "online",
       "mac": "24:5e:be:25:81:27",
-      "parentId": "router",
-      "lastSeen": "2026-06-15T22:44:37.139Z",
-      "inMap": false,
+      "parentId": "bc08c84e-f277-47cc-9f93-2488b4a03b29",
+      "lastSeen": "2026-06-15T22:52:36.021Z",
+      "inMap": true,
       "id": "d264fecf-1c83-4337-877e-5d0e3323f62e"
     },
     {
@@ -110,7 +149,7 @@
       "status": "online",
       "mac": "b8:3a:08:28:96:a0",
       "parentId": "router",
-      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "lastSeen": "2026-06-15T22:52:36.021Z",
       "inMap": false,
       "id": "4e528ecb-25c0-46cb-9ce7-ef666b0150c2"
     },
@@ -121,7 +160,7 @@
       "status": "online",
       "mac": "b8:3a:08:28:96:70",
       "parentId": "router",
-      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "lastSeen": "2026-06-15T22:52:36.021Z",
       "inMap": false,
       "id": "14c0551c-6491-4113-8b37-34f9ca8e2a8d"
     },
@@ -131,8 +170,8 @@
       "type": "pc",
       "status": "online",
       "mac": "08:8a:f1:7d:d6:90",
-      "parentId": "90f2bc8a-04be-4555-aad7-3db4b693564f",
-      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "parentId": "bc08c84e-f277-47cc-9f93-2488b4a03b29",
+      "lastSeen": "2026-06-15T22:52:36.021Z",
       "inMap": true,
       "id": "56d25a15-2d02-4767-97b3-90b045c86735"
     },
@@ -143,7 +182,7 @@
       "status": "online",
       "mac": "a0:d2:b1:85:9d:53",
       "parentId": "router",
-      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "lastSeen": "2026-06-15T22:52:36.021Z",
       "inMap": false,
       "id": "2c69c516-918c-4c04-8160-255fe115aed8"
     },
@@ -154,7 +193,7 @@
       "status": "online",
       "mac": "44:3e:07:7e:b5:c4",
       "parentId": "router",
-      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "lastSeen": "2026-06-15T22:52:36.021Z",
       "inMap": false,
       "id": "f5e28a45-d879-4bc0-b865-c7195efea906"
     },
@@ -165,7 +204,7 @@
       "status": "online",
       "mac": "40:2f:86:89:d4:c0",
       "parentId": "router",
-      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "lastSeen": "2026-06-15T22:52:36.021Z",
       "inMap": false,
       "id": "642e012f-5072-4f54-b90d-a4655f873dfa"
     },
@@ -176,27 +215,35 @@
       "status": "online",
       "mac": "06:d1:dd:e4:2a:ca",
       "parentId": "router",
-      "lastSeen": "2026-06-15T22:44:37.139Z",
+      "lastSeen": "2026-06-15T22:52:36.021Z",
       "inMap": false,
       "id": "159d0be2-45cc-46cf-9acd-cd4c53d19df9"
     }
   ],
   "layout": {
     "router": {
-      "x": 572.5579833984375,
-      "y": -57.40901184082031
+      "x": 381.4934387207031,
+      "y": -198.24052047729492
     },
     "90f2bc8a-04be-4555-aad7-3db4b693564f": {
-      "x": 233.78604125976562,
-      "y": -18.839192986488342
+      "x": -15.584419250488281,
+      "y": -44.85264325886965
     },
     "a4e7b315-8ba0-47e8-9322-03825aa96db6": {
-      "x": 346.0113830566406,
-      "y": 147.70745849609375
+      "x": 592.6908874511719,
+      "y": 119.00289916992188
     },
     "b2ba901e-1609-4b2c-8d14-dd976a090150": {
-      "x": 74.51564025878906,
-      "y": 153.0876716375351
+      "x": 378.60411071777344,
+      "y": 119.8980964422226
+    },
+    "bc08c84e-f277-47cc-9f93-2488b4a03b29": {
+      "x": 589.999755859375,
+      "y": -46.94505500793457
+    },
+    "168ef3f7-9ce6-4c39-b30a-e7624b2f5e05": {
+      "x": 836.9794921875,
+      "y": 117.80576705932617
     }
   },
   "settings": {
@@ -205,5 +252,5 @@
     "scanEnd": 254,
     "autosave": true
   },
-  "updatedAt": "2026-06-15T22:44:37.139Z"
+  "updatedAt": "2026-06-15T22:52:36.021Z"
 }
