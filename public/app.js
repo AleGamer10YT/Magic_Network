@@ -459,19 +459,33 @@ function renderSvg() {
 }
 
 function renderLink(link) {
-  const from = centerOf(link.from);
-  const to = centerOf(link.to);
-  const midY = (from.y + to.y) / 2;
+  const start = boundaryPointTowards(link.from, link.to);
+  const end = boundaryPointTowards(link.to, link.from);
+  const midY = (start.y + end.y) / 2;
   const fromSpeed = getNodePrimarySpeed(link.from);
   const toSpeed = getNodePrimarySpeed(link.to);
   const bottleneck = pickLowerSpeed(fromSpeed, toSpeed);
   const strokeColor = switchSpeedColors[bottleneck] || '#9ca9a5';
-  const pathD = `M ${from.x} ${from.y} C ${from.x} ${midY}, ${to.x} ${midY}, ${to.x} ${to.y - 58}`;
+  const pathD = `M ${start.x} ${start.y} C ${start.x} ${midY}, ${end.x} ${midY}, ${end.x} ${end.y}`;
   return `<path class="link-line" marker-end="url(#arrow)" d="${pathD}" stroke="${strokeColor}" style="stroke-width:3;fill:none"></path>`;
 }
 
 function centerOf(node) {
   return { x: node.position.x + 90, y: node.position.y + 58 };
+}
+
+function boundaryPointTowards(fromNode, toNode) {
+  const from = centerOf(fromNode);
+  const to = centerOf(toNode);
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+  const halfW = 90;
+  const halfH = 58;
+  if (dx === 0 && dy === 0) return from;
+  const tx = dx === 0 ? Infinity : Math.abs(halfW / dx);
+  const ty = dy === 0 ? Infinity : Math.abs(halfH / dy);
+  const t = Math.min(tx, ty);
+  return { x: from.x + dx * t, y: from.y + dy * t };
 }
 
 function renderNode(node) {
