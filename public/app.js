@@ -813,24 +813,20 @@ function setSwitchModeValue(value) {
 }
 
 function getSwitchSpeedsValue() {
-  return els.switchSpeedInputs.filter((input) => input.checked).map((input) => input.value);
+  const checked = els.switchSpeedInputs.find((input) => input.checked);
+  return checked ? [checked.value] : ["1g"];
 }
 
 function setSwitchSpeedsValue(speeds) {
-  const selected = new Set(Array.isArray(speeds) && speeds.length ? [speeds[0]] : ["1g"]);
+  const selected = Array.isArray(speeds) && speeds.length ? speeds[0] : "1g";
   els.switchSpeedInputs.forEach((input) => {
-    input.checked = selected.has(input.value);
+    input.checked = input.value === selected;
   });
   clearSwitchSpeedError();
 }
 
-function handleSwitchSpeedChange(event) {
-  if (event.target.checked) {
-    els.switchSpeedInputs.forEach((input) => {
-      if (input !== event.target) input.checked = false;
-    });
-    clearSwitchSpeedError();
-  }
+function handleSwitchSpeedChange() {
+  clearSwitchSpeedError();
 }
 
 function clearSwitchSpeedError() {
